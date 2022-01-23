@@ -1,7 +1,9 @@
+let empPayrollList;
 window.addEventListener('DOMContentLoaded', (event) => {
     empPayrollList = getEmployeeDataFromStorage();
     document.querySelector(".emp-count").textContent = empPayrollList.length;
     createInnerHtml();
+    localStorage.removeItem('editEmp');
 });
 const getEmployeeDataFromStorage = () => {
     return localStorage.getItem('EmployeePayrollList') ? JSON.parse(localStorage.getItem('EmployeePayrollList')) : [];
@@ -23,8 +25,9 @@ const createInnerHtml = () => {
             <td>${empPayrollData._salary}</td>
             <td>${stringifyDate(empPayrollData._startDate)}</td>
             <td>
-                    <img id="1" onclick="remove(this)" alt="delete" src="/ClientServerArchitecture/assets/icons/delete-black-18dp.svg">
-                    <img id="1" alt="edit" onclick=" update(this)" src="/ClientServerArchitecture/assets/icons/create-black-18dp.svg">
+            <img id="${empPayrollData._id}" onclick="remove(this)" alt="delete" src="/ClientServerArchitecture/assets/icons/delete-black-18dp.svg">
+            <img id="${empPayrollData._id}" onclick="update(this)" alt="edit" src="/ClientServerArchitecture/assets/icons/create-black-18dp.svg">
+                    
                 </td>
            </tr>        
          `;
@@ -47,3 +50,7 @@ const stringifyDate = (date) => {
     const newDate = !date ? "undefined" : new Date(date).toLocaleDateString('en-GB', options);
     return newDate;
 } 
+let site_properties = {
+    home: "..\html\payrollHome.html",
+    addEmployee: "..\html\payroll.html"
+}; 
